@@ -23,30 +23,32 @@
 	          </div>
 	          <div class="form-group">
 	            <label for="channels" class="col-form-label">Channels (comma separated) :</label>
-	            <input type="text" class="form-control" id="channels">
+	            <input type="text" class="form-control" id="channel">
 	          </div>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
-	      </div>
+	       <!-- <button type="button" value="submit" class="btn btn-primary" data-dismiss="modal" onclick="onAddedToNewChannelReceived('channel');">Done</button>-->
+				 <button type="button" value="submit" class="btn btn-primary" data-dismiss="modal" onHide="onAddedToNewChannelReceived('channel');">Done</button>
+				</div>
 	    </div>
 	  </div>
 	</div>
-	<div class="container" id="alertContainer"> <!-- Below is sample data which shall be removed -->
+	<div class="container" id="alertContainer"> <!-- Below is sample data which shall be removed alertContainer
 		<div class="alert alert-success alert-dismissible fade show" role="alert">
 			You are added to <strong>general</strong> successfully!
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+				<span aria-hidden="false">&times;</span>
 			</button>
 		</div>
+		-->
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-md-6">
 				<h4>Start sending messages..</h4>
-				<form>
+				<form onsubmit="">
 					<div class="form-group">
 						<label for="channel">Channel</label>
 						<input id="channel" placeholder="Type your channel" class="form-control" />
@@ -65,15 +67,15 @@
 						<label for="newchannel">Channel</label>
 						<input id="newchannel" placeholder="Type your channel" class="form-control" list="channelsList"/>
 						<datalist id="channelsList">
-							<option>general</option> <!-- This is sample data which shall be removed -->
+						<!--	<option>general</option>  This is sample data which shall be removed -->
 						</datalist>
 					</div>
-					<button id="joinChannel" class="btn btn-success" type="button">Join</button>
-					<button id="leaveChannel" class="btn btn-danger" type="button">Leave</button>
+					<button id="joinChannel" class="btn btn-success" type="button" onclick()>Join</button>
+					<button id="leaveChannel" class="btn btn-danger" type="button" onclick()>Leave</button>
 				</form>
 			</div>
 		</div>
-		<div id="chatContainer" class="row"> <!-- Below is sample data which shall be removed -->
+		<div id="chatContainer" class="row"> <!-- Below is sample data which shall be removed
 			<div class="col-12">
 				<div class="card received-message">
 					<div class="card-body">
@@ -94,7 +96,7 @@
 						<p class="card-text">System : Welcome John !!</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -111,10 +113,10 @@
 		$('form').on('submit', (event) => {
 			sendMessage(event, socket);
 		});
-
-		$('#joinChannel').on('click', (event) => {
-			joinChannel(event, socket);
+			$('#joinChannel').on('click', (event) => {
+				joinChannel(event, socket);
 		});
+
 
 		$('#leaveChannel').on('click', (event) => {
 			leaveChannel(event, socket);
@@ -122,10 +124,11 @@
 
 		$('#exampleModal').on('hide.bs.modal', () => {
 			const usernameInpt = document.getElementById('username').value;
-			const channelsInpt = document.getElementById('channels').value;
-
+			const channelsInpt = document.getElementById('channel').value;
+			console.log('usernameInpt',usernameInpt);
 			const username = usernameInpt === '' ? 'Anonymous' : usernameInpt;
 			const channels = channelsInpt === '' ? [] : channelsInpt.split(',');
+			console.log(channels,'username',username);
 
 			socket.emit('register', { username, channels });
 

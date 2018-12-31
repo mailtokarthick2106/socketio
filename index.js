@@ -9,6 +9,13 @@ const winston = require('./winston');
 
 const PORT = 3000;
 
+io.on('connection', (socket)=>{
+  console.log('info','Connected the Chat ',socket.rooms);
+
+})
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
